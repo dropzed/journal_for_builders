@@ -1,0 +1,47 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+}
+
+model User {
+    id String @id @default(uuid())
+
+    email    String @unique
+    password String
+
+    role UserRole @default(REGULAR)
+
+    isVerified         Boolean @default(false) @map("is_verified")
+    isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("users")
+}
+
+model Token {
+    id String @id @default(uuid())
+
+    email     String
+    token     String    @unique
+    type      TokenType
+    expiresAt DateTime  @map("expires_at")
+
+    @@map("tokens")
+}
+
+enum UserRole {
+    REGULAR
+    ADMIN
+}
+
+enum TokenType {
+    EMAIL_VERIFICATION
+    PASSWORD_RESET
+    TWO_FACTOR_AUTH
+}
