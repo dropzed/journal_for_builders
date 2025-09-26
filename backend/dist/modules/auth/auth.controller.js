@@ -16,6 +16,7 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const dto_1 = require("./dto");
+const google_recaptcha_1 = require("@nestlab/google-recaptcha");
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -36,6 +37,7 @@ let AuthController = class AuthController {
 };
 exports.AuthController = AuthController;
 __decorate([
+    (0, google_recaptcha_1.Recaptcha)(),
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
@@ -44,6 +46,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
 __decorate([
+    (0, google_recaptcha_1.Recaptcha)(),
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),

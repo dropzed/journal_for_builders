@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 dotenv.config();
 
+// Функция для проверки, находится ли приложение в режиме разработки
 export const isDev = (configService: ConfigService) =>
     configService.getOrThrow<string>('NODE_ENV') === 'development';
 
