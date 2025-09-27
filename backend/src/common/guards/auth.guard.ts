@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
 
 // Эдуард проверяет аутентификацию пользователя
@@ -15,6 +15,10 @@ export class AuthGuard implements CanActivate {
         }
 
         request.user = await this.userService.findById(request.session.userId);
+
+        if (request.user?.isTwoFactorEnabled && !request.session.is2faPassed) {
+            throw new ForbiddenException('2FA verification required');
+        }
 
         return true;
     }

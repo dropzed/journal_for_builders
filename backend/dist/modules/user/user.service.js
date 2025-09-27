@@ -28,13 +28,18 @@ let UserService = class UserService {
     async findByEmail(email) {
         return this.prisma.user.findUnique({ where: { email } });
     }
-    async create(email, password, isVerified) {
+    async update(user) {
+        return this.prisma.user.update({
+            where: { id: user.id },
+            data: user,
+        });
+    }
+    async create(email, password) {
         const hashedPassword = bcrypt.hashSync(password, 10);
         return this.prisma.user.create({
             data: {
                 email,
                 password: hashedPassword,
-                isVerified
             },
         });
     }

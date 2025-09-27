@@ -9,29 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthGuard = void 0;
+exports.SessionAuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../../modules/user/user.service");
-let AuthGuard = class AuthGuard {
+let SessionAuthGuard = class SessionAuthGuard {
     userService;
     constructor(userService) {
         this.userService = userService;
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        if (typeof request.session.userId === 'undefined') {
+        if (!request.session.userId) {
             throw new common_1.UnauthorizedException('User not authenticated');
         }
         request.user = await this.userService.findById(request.session.userId);
-        if (request.user?.isTwoFactorEnabled && !request.session.is2faPassed) {
-            throw new common_1.ForbiddenException('2FA verification required');
-        }
         return true;
     }
 };
-exports.AuthGuard = AuthGuard;
-exports.AuthGuard = AuthGuard = __decorate([
+exports.SessionAuthGuard = SessionAuthGuard;
+exports.SessionAuthGuard = SessionAuthGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService])
-], AuthGuard);
-//# sourceMappingURL=auth.guard.js.map
+], SessionAuthGuard);
+//# sourceMappingURL=session-auth.guard.js.map

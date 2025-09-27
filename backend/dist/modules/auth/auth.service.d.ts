@@ -9,15 +9,5 @@ export declare class AuthService {
     register(req: Request, dto: RegisterDto): Promise<unknown>;
     login(req: Request, dto: LoginDto): Promise<unknown>;
     logout(req: Request, res: Response): Promise<void>;
-    getProfile(req: Request): Promise<{
-        email: string;
-        password: string;
-        id: string;
-        role: import(".prisma/client").$Enums.UserRole;
-        isVerified: boolean;
-        isTwoFactorEnabled: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
     private saveSession;
 }

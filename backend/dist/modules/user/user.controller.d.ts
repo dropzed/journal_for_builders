@@ -7,8 +7,8 @@ export declare class UserController {
         password: string;
         id: string;
         role: import(".prisma/client").$Enums.UserRole;
-        isVerified: boolean;
         isTwoFactorEnabled: boolean;
+        twoFactorSecret: string | null;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -17,8 +17,8 @@ export declare class UserController {
         password: string;
         id: string;
         role: import(".prisma/client").$Enums.UserRole;
-        isVerified: boolean;
         isTwoFactorEnabled: boolean;
+        twoFactorSecret: string | null;
         createdAt: Date;
         updatedAt: Date;
     }>;

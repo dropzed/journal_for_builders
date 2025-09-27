@@ -28,10 +28,4 @@ export class AuthController {
     ) {
         return this.authService.logout(req, res);
     }
-
-    @Post('me')
-    async getProfile(@Req() req: Request) {
-        return this.authService.getProfile(req);
-    }
-
 }
