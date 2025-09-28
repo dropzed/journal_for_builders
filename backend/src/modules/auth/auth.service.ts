@@ -26,7 +26,7 @@ export class AuthService {
             throw new ConflictException('Email already exists');
         }
 
-        const newUser = await this.userService.create(dto.email, dto.password, false);
+        const newUser = await this.userService.create(dto.email, dto.password);
         return this.saveSession(req, newUser);
     }
 
@@ -61,23 +61,11 @@ export class AuthService {
         });
     }
 
-    async getProfile(req: Request) {
-        if (!req.session.userId) {
-            throw new UnauthorizedException('User not logged in');
-        }
-
-        const user = await this.userService.findById(req.session.userId);
-        if (!user) {
-            throw new NotFoundException('User not found');
-        }
-
-        return user;
-    }
-
     //Сохраняем сессию пользователя
     private async saveSession(req: Request, user: User) {
         return new Promise((resolve, reject) => {
             req.session.userId = user.id;
+            req.session.is2faPassed = !user.isTwoFactorEnabled;
 
             req.session.save(error => {
                 if (error) {

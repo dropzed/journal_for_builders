@@ -15,24 +15,13 @@ model User {
 
     role UserRole @default(REGULAR)
 
-    isVerified         Boolean @default(false) @map("is_verified")
     isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
+    twoFactorSecret    String? @map("two_factor_secret")
 
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("users")
-}
-
-model Token {
-    id String @id @default(uuid())
-
-    email     String
-    token     String    @unique
-    type      TokenType
-    expiresAt DateTime  @map("expires_at")
-
-    @@map("tokens")
 }
 
 enum UserRole {

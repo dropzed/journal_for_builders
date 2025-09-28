@@ -13,6 +13,7 @@ const config_1 = require("@nestjs/config");
 const is_dev_util_1 = require("./libs/common/utils/is-dev.util");
 const prisma_module_1 = require("./prisma/prisma.module");
 const user_module_1 = require("./modules/user/user.module");
+const two_factor_module_1 = require("./modules/two-factor/two-factor.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,7 +26,8 @@ exports.AppModule = AppModule = __decorate([
                 ignoreEnvFile: !is_dev_util_1.IS_DEV_ENV,
             }),
             prisma_module_1.PrismaModule,
-            user_module_1.UserModule
+            user_module_1.UserModule,
+            two_factor_module_1.TwoFactorModule
         ]
     })
 ], AppModule);

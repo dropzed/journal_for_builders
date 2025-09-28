@@ -8,17 +8,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const authorized_decorator_1 = require("../../common/decorators/authorized.decorator");
+const auth_decorator_1 = require("../../common/decorators/auth.decorator");
+const client_1 = require("@prisma/client");
 let UserController = class UserController {
     userService;
     constructor(userService) {
         this.userService = userService;
     }
+    async findProfile(id) {
+        return this.userService.findById(id);
+    }
+    async findById(id) {
+        return this.userService.findById(id);
+    }
 };
 exports.UserController = UserController;
+__decorate([
+    (0, auth_decorator_1.Authorization)(),
+    (0, common_1.Get)('profile'),
+    __param(0, (0, authorized_decorator_1.Authorized)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findProfile", null);
+__decorate([
+    (0, auth_decorator_1.Authorization)(client_1.UserRole.ADMIN),
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findById", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_service_1.UserService])
